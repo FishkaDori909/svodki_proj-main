@@ -1,0 +1,17 @@
+# настройки с адресами и паролями — только на сервере
+config/config.toml
+config/manual_values.toml
+*.env
+
+# рабочие данные и журналы
+data/
+logs/
+
+# старая версия проекта (можно удалить)
+_legacy/
+
+# служебное
+__pycache__/
+*.pyc
+.venv/
+venv/

@@ -1,0 +1,35 @@
+[Unit]
+Description=Автосборка сводки 2-х час ГПН-Ямал
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=svodka
+Group=svodka
+WorkingDirectory=/opt/svodka
+ExecStart=/opt/svodka/.venv/bin/python -m svodka watch
+# пароль от почты (файл создаётся по инструкции из README, знак "-" — файл необязателен)
+EnvironmentFile=-/etc/svodka/svodka.env
+Restart=on-failure
+RestartSec=15
+
+# --- ограничения: программа видит и меняет только то, что ей нужно ---
+UMask=0027
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/svodka/data /opt/svodka/logs
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictNamespaces=true
+LockPersonality=true
+CapabilityBoundingSet=
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+
+[Install]
+WantedBy=multi-user.target
